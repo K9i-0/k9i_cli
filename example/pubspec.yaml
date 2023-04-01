@@ -1,0 +1,9 @@
+name: k9i_cli_example
+
+environment: 
+  sdk: '>=2.17.0 <3.0.0'
+
+dev_dependencies: 
+  grinder: ^0.9.3
+  k9i_cli:
+    path: ..
