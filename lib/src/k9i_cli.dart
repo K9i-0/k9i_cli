@@ -39,7 +39,8 @@ void addBuildRunnerTask({bool enableAlias = false}) {
   addTask(
     GrinderTask(
       'watch',
-      description: 'flutter pub run build_runner watch',
+      description:
+          'flutter pub run build_runner watch --delete-conflicting-outputs',
       taskFunction: watchTaskFunction,
     ),
   );
@@ -80,8 +81,7 @@ void addServeWebTask({bool enableAlias = false}) {
   addTask(
     GrinderTask(
       'serveWeb',
-      description:
-          'flutter run -d web-server --web-hostname=0.0.0.0 --web-port=50505',
+      description: 'Serve Flutter web app on local IP.',
       taskFunction: serveWebTaskFunction,
     ),
   );
@@ -127,7 +127,7 @@ void addUpdatePodsTask({bool enableAlias = false}) {
   addTask(
     GrinderTask(
       'updatePods',
-      description: 'Update pods',
+      description: 'Clean and update Pods installation.',
       taskFunction: updatePodsTaskFunction,
     ),
   );
