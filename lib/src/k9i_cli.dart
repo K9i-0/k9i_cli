@@ -6,16 +6,17 @@ import 'package:k9i_cli/src/utils.dart';
 /// Add all tasks from the k9i_cli package.
 ///
 /// If [enableAlias] is `true`, aliases are added to the tasks.
-void addAllTasks({bool enableAlias = false}) {
-  addBuildRunnerTask(enableAlias: enableAlias);
-  addServeWebTask(enableAlias: enableAlias);
-  addUpdatePodsTask(enableAlias: enableAlias);
+void addAllTasks({bool enableAlias = false, bool useFvm = false}) {
+  addBuildRunnerTask(enableAlias: enableAlias, useFvm: useFvm);
+  addServeWebTask(enableAlias: enableAlias, useFvm: useFvm);
+  addUpdatePodsTask(enableAlias: enableAlias, useFvm: useFvm);
 }
 
 /// Add a task to run build_runner.
-void addBuildRunnerTask({bool enableAlias = false}) {
-  buildTaskFunction() =>
-      runCommand(command: 'flutter pub run build_runner build -d');
+void addBuildRunnerTask({bool enableAlias = false, bool useFvm = false}) {
+  buildTaskFunction() => runCommand(
+        command: '${useFvm ? 'fvm ' : ''}flutter pub run build_runner build -d',
+      );
   addTask(
     GrinderTask(
       'build',
@@ -34,8 +35,9 @@ void addBuildRunnerTask({bool enableAlias = false}) {
     );
   }
 
-  watchTaskFunction() =>
-      runCommand(command: 'flutter pub run build_runner watch -d');
+  watchTaskFunction() => runCommand(
+        command: '${useFvm ? 'fvm ' : ''}flutter pub run build_runner watch -d',
+      );
   addTask(
     GrinderTask(
       'watch',
@@ -56,7 +58,7 @@ void addBuildRunnerTask({bool enableAlias = false}) {
 }
 
 /// Add a task to serve the web app.
-void addServeWebTask({bool enableAlias = false}) {
+void addServeWebTask({bool enableAlias = false, bool useFvm = false}) {
   serveWebTaskFunction() {
     final result = Process.runSync('ifconfig', [], runInShell: true);
     if (result.exitCode != 0) {
@@ -71,7 +73,7 @@ void addServeWebTask({bool enableAlias = false}) {
         log(ip);
         runCommand(
           command:
-              'flutter run -d web-server --web-hostname=$ip --web-port=50505',
+              '${useFvm ? 'fvm ' : ''}flutter run -d web-server --web-hostname=$ip --web-port=50505',
         );
         break;
       }
@@ -97,7 +99,7 @@ void addServeWebTask({bool enableAlias = false}) {
 }
 
 /// Add a task to update pods.
-void addUpdatePodsTask({bool enableAlias = false}) {
+void addUpdatePodsTask({bool enableAlias = false, bool useFvm = false}) {
   updatePodsTaskFunction() {
     run(
       'rm',
@@ -109,14 +111,25 @@ void addUpdatePodsTask({bool enableAlias = false}) {
       arguments: ['-rf', 'Podfile.lock'],
       workingDirectory: 'ios',
     );
-    run(
-      'flutter',
-      arguments: ['clean'],
-    );
-    run(
-      'flutter',
-      arguments: ['pub', 'get'],
-    );
+    if (useFvm) {
+      run(
+        'fvm',
+        arguments: ['flutter', 'clean'],
+      );
+      run(
+        'fvm',
+        arguments: ['flutter', 'pub', 'get'],
+      );
+    } else {
+      run(
+        'flutter',
+        arguments: ['clean'],
+      );
+      run(
+        'flutter',
+        arguments: ['pub', 'get'],
+      );
+    }
     run(
       'pod',
       arguments: ['install', '--repo-update'],
