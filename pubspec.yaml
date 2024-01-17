@@ -1,6 +1,6 @@
 name: k9i_cli
 description: This dart package provides Grinder tasks used by K9i, allowing for the sharing of Grinder tasks across multiple projects.
-version: 1.1.0
+version: 1.1.1
 homepage: https://twitter.com/K9i_apps
 repository: https://github.com/K9i-0/k9i_cli
 
@@ -8,8 +8,8 @@ environment:
   sdk: '>=2.17.0 <4.0.0'
 
 dependencies: 
-  grinder: ^0.9.3
+  grinder: ^0.9.5
 
 dev_dependencies:
-  lints: ^2.0.1
-  test: ^1.21.0
+  lints: ^2.1.1
+  test: ^1.25.1

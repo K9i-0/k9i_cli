@@ -4,6 +4,6 @@ environment:
   sdk: '>=2.17.0 <4.0.0'
 
 dev_dependencies: 
-  grinder: ^0.9.3
+  grinder: ^0.9.5
   k9i_cli:
     path: ..
