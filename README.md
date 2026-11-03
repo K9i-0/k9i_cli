@@ -1,4 +1,8 @@
 # k9i_cli
+
+> This package is unlisted on pub.dev. It is no longer used by its author.
+> Existing releases remain available for projects that already depend on it.
+
 This dart package provides Grinder tasks used by K9i, allowing for the sharing of Grinder tasks across multiple projects.
 
 ## Usage
