@@ -32,3 +32,8 @@ Available tasks:
   updatePods           Clean and update Pods installation.
   up                   Alias for updatePods
 ```
+
+## Development
+
+See the [development guide](AGENTS.md) for safe CLI checks, compatibility notes,
+and guidance for working with an existing pull request.
